@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-customer-modify-charge-deployment
+  namespace: ms-middleware
+  labels:
+    event: ms-customer-modify-charge
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      event: ms-customer-modify-charge
+  template:
+    metadata:
+      labels:
+        event: ms-customer-modify-charge
+    spec:
+      containers:
+        - 
+          image: 10.112.230.33:443/ms-middleware-customer-modify-charge:1.0.0
+          name: ms-customer-modify-charge
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: 2048Mi
+              cpu: 1000m
+            requests:
+              memory: 1024Mi
+              cpu: 300m
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config-volume
+              mountPath: /opt/ms/ms-customer-modify-charge/application.properties
+              subPath: application.properties      
+            - name: ms-logs-volume
+              mountPath: /opt/ms/ms-customer-modify-charge/logs
+      volumes:
+        - name: ms-logs-volume
+          hostPath:
+            path: /datos/logs/ms/ms-customer-modify-charge
+        - name: config-volume
+          configMap:
+            name: ms-customer-modify-charge-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-customer-modify-charge-service
+  namespace: ms-middleware
+  labels:
+    event: ms-customer-modify-charge
+spec:
+  type: NodePort
+  ports:
+    -
+      port: 8080
+      targetPort: 8080 
+      nodePort: 32118
+  selector:
+    event: ms-customer-modify-charge
+

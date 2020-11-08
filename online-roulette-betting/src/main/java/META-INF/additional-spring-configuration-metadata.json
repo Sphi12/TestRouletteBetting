@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "telefonica.application-log-enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'telefonica.application-log-enabled'"
+  },
+  {
+    "name": "telefonica.application-logger-name",
+    "type": "java.lang.String",
+    "description": "A description for 'telefonica.application-logger-name'"
+  },
+  {
+    "name": "telefonica.execution-log-enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'telefonica.execution-log-enabled'"
+  },
+  {
+    "name": "telefonica.execution-logger-name",
+    "type": "java.lang.String",
+    "description": "A description for 'telefonica.execution-logger-name'"
+  }
+]}
